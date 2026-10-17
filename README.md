@@ -1,7 +1,7 @@
 # TapTap assets
 
 TapTap(안드로이드/아이폰 책 뷰어)이 필요할 때 골라 받는 파일 모음입니다.
-항목마다 릴리스가 따로 있습니다(목소리 모델, 글꼴). 앱은 받은 파일마다 앱 안에 적힌 SHA-256 값과 맞는지 확인합니다.
+항목마다 릴리스가 따로 있습니다(목소리 모델, 배운 목소리, 글꼴). 앱은 받은 파일마다 앱 안에 적힌 SHA-256 값과 맞는지 확인합니다.
 
 ## supertonic-2 (릴리스 `supertonic-2-v1`)
 
@@ -24,6 +24,24 @@ TapTap(안드로이드/아이폰 책 뷰어)이 필요할 때 골라 받는 파�
 - 라이선스: BigScience Open RAIL-M, 전문은 [MODEL-LICENSE](MODEL-LICENSE)에 있습니다.
   **이 모델은 그 라이선스 5항과 부록 A의 사용 제한을 따라야 합니다.**
   (예: 남을 사칭하거나 속이는 데, 법을 어기는 데 쓰면 안 됩니다)
+
+## supertonic-2-tuned (릴리스 `supertonic-2-tuned-v1`)
+
+배운 목소리입니다. 위 supertonic-2 의 텍스트 인코더와 벡터 추정기를 미세 조정한 것으로, 이 두 파일만 바꾸고 나머지
+(길이 예측, 보코더, tts.json, unicode_indexer.bin, voice.bin)는 supertonic-2 의 것을 그대로 함께 씁니다.
+대화의 억양과 말투를 더 자연스럽게 읽도록 화자 여성 1(sid 0)에 맞춰 학습했습니다.
+
+| 파일 | SHA-256 |
+|---|---|
+| text_encoder.onnx | 23b10d3e3f1e3b5856fe07839e1587db516d4534740995160fca664d16538037 |
+| vector_estimator.int8.onnx | 0293f2aaf1dc0410acf3dad1063689c1711b1a3abd519791a1b169db14d2ebc4 |
+
+- 바탕 모델: Supertone Inc. 의 [Supertonic 2](https://huggingface.co/Supertone/supertonic-2) (fp32 원본에서 미세 조정)
+- 변경 사항: 텍스트 인코더와 벡터 추정기의 가중치를 미세 조정했습니다. 벡터 추정기는 int8 로 줄였습니다. 입출력 모양은 원본과 같습니다.
+- 학습 자료: 직접 쓴 문장 3,346개를, [VoxCPM2](https://huggingface.co/openbmb/VoxCPM2)(Apache-2.0)가 supertonic-2 여성 1의 소리를 기준으로 읽은 합성 음성입니다.
+  사람의 녹음이나 다른 저작물은 쓰지 않았습니다.
+- 라이선스: 바탕 모델과 같은 BigScience Open RAIL-M 입니다. 전문은 [MODEL-LICENSE](MODEL-LICENSE)에 있습니다.
+  **고친 모델도 그 라이선스 5항과 부록 A의 사용 제한을 그대로 따라야 합니다.**
 
 ## 글꼴 (릴리스 `fonts-v1`)
 
